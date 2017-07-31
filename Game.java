@@ -1,9 +1,10 @@
 import javafx.scene.canvas.*;
 import javafx.scene.input.*;
+import javafx.scene.paint.*;
 
 public class Game extends GameBase {
 	private Text mlocation;
-	private Ball ball;
+	private Ball ball, ball2;
 
 	public Game (GraphicsContext gc) {
 		super(gc);
@@ -13,6 +14,10 @@ public class Game extends GameBase {
 		this.ball = new Ball(300, 200);
 		this.ball.setMoveBlindly(true);
 		this.ball.setSpeed(1, -1);
+
+		this.ball2 = new Ball(0, 0);
+		this.ball2.setColor(Color.web("pink"));
+
 		this.mlocation = new Text("0|0", 20, Settings.HEIGHT - 10);
 
 		getPlayground().add(this.ball);
@@ -20,6 +25,7 @@ public class Game extends GameBase {
 		getPlayground().add(new Rectangle(0, 0, Settings.WIDTH, 10));
 		getPlayground().add(new Rectangle(0, 0, 10, Settings.HEIGHT));
 		getPlayground().add(new Rectangle(Settings.WIDTH - 10, 0, 10, Settings.HEIGHT));
+		getPlayground().add(this.ball2);
 	}
 
 	public void step () {
@@ -52,7 +58,6 @@ public class Game extends GameBase {
 
 	public void onMouseMoved (double x, double y) {
 		this.mlocation.setText((int) x + "|" + (int) y);
-		// this.ball.setDestination((int) x, (int) y);
-		// this.ball.setSpeed(1, 1);
+		this.ball2.place((int) x, (int) y);
 	}
 }
