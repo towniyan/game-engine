@@ -1,10 +1,15 @@
+package io.github.towniyan.main;
+
 import javafx.scene.canvas.*;
+import javafx.geometry.*;
+import javafx.event.*;
+import javafx.scene.input.*;
 
 public abstract class GameObject extends Helper {
 	private int x = 0, y = 0;
-	private int[] speed = {0, 0};
-	private int[] destination = {0, 0};
+	private int[] speed = {0, 0}, destination = {0, 0};
 	private boolean moveBlindly = false;
+	private BoundingBox boundingBox;
 
 	public GameObject (int x, int y) {
 		this.x = x;
@@ -54,7 +59,7 @@ public abstract class GameObject extends Helper {
 		this.y = y;
 	}
 
-	public void move (int x, int y, int[] speed) {
+	public void moveTowards (int x, int y, int[] speed) {
 		// println(this.speedX + ", " + this.speedY);
 		this.speed[0] = speed[0];
 		this.speed[1] = speed[1];
@@ -72,8 +77,8 @@ public abstract class GameObject extends Helper {
 			this.y += this.speed[1];
 	}
 
-	public void move () {
-		move(this.destination[0], this.destination[1], this.speed);
+	public void moveTowards () {
+		moveTowards(this.destination[0], this.destination[1], this.speed);
 	}
 
 	public void moveBlindly () {
@@ -92,5 +97,21 @@ public abstract class GameObject extends Helper {
 	public void bounceY () {
 		this.speed[1] *= -1;
 		println("Bounced Y");
+	}
+
+	public void setBoundingBox(int x, int y, int width, int height) {
+		this.boundingBox = new BoundingBox(x, y, width, height);
+	}
+
+	public BoundingBox getBoundingBox () {
+		return this.boundingBox;
+	}
+
+	public boolean collidesWith (GameObject o) {
+		return this.boundingBox.intersects(o.getBoundingBox());
+	}
+
+	public void onKeyPress (KeyCode code) {
+
 	}
 }

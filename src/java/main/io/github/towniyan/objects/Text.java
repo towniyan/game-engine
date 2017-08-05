@@ -1,3 +1,5 @@
+package io.github.towniyan.objects;
+
 import javafx.scene.canvas.*;
 import javafx.scene.paint.*;
 

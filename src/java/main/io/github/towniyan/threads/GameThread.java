@@ -1,4 +1,7 @@
+package io.github.towniyan.threads;
+
 import javafx.scene.canvas.*;
+import io.github.towniyan.main.*;
 
 public class GameThread extends Thread {
 	private GraphicsContext gc;

@@ -1,3 +1,5 @@
+package io.github.towniyan.main;
+
 import javafx.scene.paint.*;
 
 public class Settings {

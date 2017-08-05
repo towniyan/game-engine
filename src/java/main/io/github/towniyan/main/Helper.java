@@ -1,3 +1,5 @@
+package io.github.towniyan.main;
+
 public class Helper {
 	public void println(Object o) {
 		System.out.println(o);
