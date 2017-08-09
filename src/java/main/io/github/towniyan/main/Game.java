@@ -3,65 +3,81 @@ package io.github.towniyan.main;
 import javafx.scene.canvas.*;
 import javafx.scene.input.*;
 import javafx.scene.paint.*;
+import java.util.*;
+import io.github.towniyan.objects.*;
 
 public class Game extends GameBase {
+	private static Game game;
+
 	private Text mlocation;
-	private Ball ball, ball2;
-	private Spaceship spaceship1;
+	private Ball ball;
+	private Rectangle paddle;
+
+	private int times = 0;
 
 	public Game (GraphicsContext gc) {
 		super(gc);
 	}
 
+	public static void set (Game game) {
+		Game.game = game;
+	}
+
+	public static Game get () {
+		return Game.game;
+	}
+
 	public void init () {
-		this.ball = new Ball(300, 200, 30, 30);
-		this.ball.setMoveBlindly(true);
-		this.ball.setSpeed(1, -1);
+		ball = new Ball(300, 200, 10, 10);
+		ball.setMoveBlindly(true);
+		// ball.setSpeed(5, -5);
+		getPlayground().add(ball);
 
-		this.mlocation = new Text("0|0", 20, Settings.HEIGHT - 10);
+		mlocation = new Text("0|0", 20, Settings.HEIGHT - 10);
+		getPlayground().add(mlocation);
 
-		// getPlayground().add(this.ball);
-		getPlayground().add(this.mlocation);
-		getPlayground().add(new Rectangle(0, 0, Settings.WIDTH, 10));
-		getPlayground().add(new Rectangle(0, 0, 10, Settings.HEIGHT));
-		getPlayground().add(new Rectangle(Settings.WIDTH - 10, 0, 10, Settings.HEIGHT));
-		
-		spaceship1 = new Spaceship(300, 200);
-		getPlayground().add(this.spaceship1);
+		int rectSize = 5;
+		getPlayground().add(new Rectangle(0, 0, Settings.WIDTH, rectSize));
+		getPlayground().add(new Rectangle(0, 0, rectSize, Settings.HEIGHT));
+		getPlayground().add(new Rectangle(Settings.WIDTH - rectSize, 0, rectSize, Settings.HEIGHT));
+
+		paddle = new Rectangle(Settings.WIDTH / 2, Settings.HEIGHT - 50, 100, 20);
+		getPlayground().add(paddle);
 	}
 
 	public void step () {
-		// if (this.ball.getX() > (Settings.WIDTH - 40) ||
-		// 	this.ball.getX() < 10)
-		// 	this.ball.bounceX();
-		// if (this.ball.getY() > (Settings.HEIGHT - 30) ||
-		// 	this.ball.getY() < 10)
-		// 	this.ball.bounceY();
 
-		// if (this.ball.collidesWith(this.ball2))
-		// 	this.ball2.setColor(Color.web("white"));
-		// else
-		// 	this.ball2.setColor(Color.web("green"));
 	}
 
 	public void onKeyPress (KeyCode code) {
-		// switch (code) {
-		// 	case UP:
-		// 		this.spaceship1.push(0, -20);
-		// 		break;
-		// 	case DOWN:
-		// 		this.spaceship1.push(0, 20);
-		// 		break;
-		// 	case LEFT:
-		// 		this.spaceship1.push(-20, 0);
-		// 		break;
-		// 	case RIGHT:
-		// 		this.spaceship1.push(20, 0);
-		// 		break;
-		// }
+		switch (code) {
+			case A:
+				times = 0;
+				// this.paddle.push(-20, 0);
+				Timer t = new Timer();
+				TimerTask task = new TimerTask () {
+					public void run () {
+						if (times <= 100) {
+							paddle.push(-1, 0);
+							times++;
+							t.schedule(task, 10);
+						}
+					}
+				};
+
+				t.schedule(task, 10);
+				break;
+			case D:
+				// this.paddle.push(20, 0);
+				for (int i = 0; i < 20; i++) {
+					this.paddle.push(1, 0);
+				}
+				break;
+		}
 	}
 
 	public void onMouseMoved (double x, double y) {
 		this.mlocation.setText((int) x + "|" + (int) y);
+		// paddle.place((int) x, paddle.getY());
 	}
 }

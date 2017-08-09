@@ -11,11 +11,11 @@ public class Spaceship extends GameObject {
 	public Spaceship (int x, int y) {
 		super(x, y);
 
-		GameBase.get().subscribe("keypress", this);
-		GameBase.get().subscribe("collision", this);
+		gb.subscribe("keypress", this);
+		gb.subscribe("collision", this);
 	}
 
-	public void step (GraphicsContext gc) {
+	public void step () {
 		super.setBoundingBox(getX(), getY(), 150, 132);
 
 		if (super.getMoveBlindly())

@@ -1,0 +1,1 @@
+gradle build && java -cp build/classes/java/main io.github.towniyan.main.Run

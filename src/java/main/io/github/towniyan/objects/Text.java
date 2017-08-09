@@ -13,7 +13,7 @@ public class Text extends GameObject {
 		this.y = y;
 	}
 
-	public void step (GraphicsContext gc) {
+	public void step () {
 		gc.setFill(Color.web("gray"));
 		gc.fillText(this.text, this.x, this.y);
 	}

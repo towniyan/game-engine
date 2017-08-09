@@ -1,15 +1,18 @@
-package io.github.towniyan.main;
+package io.github.towniyan.objects;
 
 import javafx.scene.canvas.*;
 import javafx.geometry.*;
 import javafx.event.*;
 import javafx.scene.input.*;
+import io.github.towniyan.main.*;
 
 public abstract class GameObject extends Helper {
 	private int x = 0, y = 0;
 	private int[] speed = {0, 0}, destination = {0, 0};
 	private boolean moveBlindly = false;
 	private BoundingBox boundingBox;
+	protected GameBase gb = GameBase.get();
+	protected GraphicsContext gc = Gc.get();
 
 	public GameObject (int x, int y) {
 		this.x = x;
@@ -20,7 +23,7 @@ public abstract class GameObject extends Helper {
 		
 	}
 
-	public abstract void step (GraphicsContext gc);
+	public abstract void step ();
 
 	public int getX () {
 		return this.x;
@@ -82,6 +85,9 @@ public abstract class GameObject extends Helper {
 	}
 
 	public void moveBlindly () {
+		// for (int i = 0; i < speed[0]; i++) {
+			
+		// }
 		push(this.speed[0], this.speed[1]);
 	}
 
@@ -92,11 +98,11 @@ public abstract class GameObject extends Helper {
 
 	public void bounceX () {
 		this.speed[0] *= -1;
-		println("Bounced X");
+		push(getSpeed()[0] * 5, 0);
 	}
 	public void bounceY () {
 		this.speed[1] *= -1;
-		println("Bounced Y");
+		push(0, getSpeed()[1] * 5);
 	}
 
 	public void setBoundingBox(int x, int y, int width, int height) {

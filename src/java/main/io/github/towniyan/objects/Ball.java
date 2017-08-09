@@ -14,7 +14,7 @@ public class Ball extends GameObject {
 		this.height = height;
 	}
 
-	public void step (GraphicsContext gc) {
+	public void step () {
 		super.setBoundingBox(getX(), getY(), width, height);
 
 		if (super.getMoveBlindly())

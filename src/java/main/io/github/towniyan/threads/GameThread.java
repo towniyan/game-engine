@@ -11,6 +11,6 @@ public class GameThread extends Thread {
 	}
 
 	public void run () {
-		new Game(gc);
+		Game.set(new Game(gc));
 	}
 }

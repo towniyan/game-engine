@@ -4,6 +4,8 @@ import java.util.*;
 import javafx.scene.canvas.*;
 import javafx.scene.input.*;
 import javafx.event.*;
+import io.github.towniyan.threads.*;
+import io.github.towniyan.objects.*;
 
 public abstract class GameBase extends Helper {
 	private GraphicsContext gc;
@@ -60,7 +62,7 @@ public abstract class GameBase extends Helper {
 	        }
 	    });
 	    
-	    new StepperThread(this).start();
+	    new StepperThread().start();
 	}
 
 	public ArrayList<GameObject> getPlayground () {
